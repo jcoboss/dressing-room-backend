@@ -25,6 +25,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   },
 }));
 
+app.use('/api-docs.json', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 // Health check
 app.get('/ping', (req, res) => {
   res.send('pong');
