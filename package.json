@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
+    "dev:debug": "nodemon --inspect=0.0.0.0:9229 src/app.js",
     "test": "jest"
   },
   "dependencies": {

@@ -1,0 +1,23 @@
+# Use Node 18 as base image
+FROM node:18-alpine
+
+# Install debugger dependencies
+RUN apk add --no-cache python3 make g++
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Copy .env.example to .env if .env doesn't exist
+COPY .env.example .env
+
+# Expose application and debug ports
+EXPOSE 8000 9229
