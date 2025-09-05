@@ -13,6 +13,9 @@ RUN npm install
 # Copy source code
 COPY . .
 
+# Copy .env.example to .env if .env doesn't exist
+COPY .env.example .env
+
 # Expose port
 EXPOSE 8000
 
