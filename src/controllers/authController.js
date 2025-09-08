@@ -141,3 +141,47 @@ exports.getCurrentUser = async (req, res) => {
     res.status(401).json({ error: error.message });
   }
 };
+
+// Verify email
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { type, token } = req.body;
+
+    if (type !== 'signup' || !token) {
+      return res.status(400).json({ error: 'Invalid verification request' });
+    }
+
+    const { error } = await supabase.auth.verifyOtp({
+      token,
+      type
+    });
+
+    if (error) throw error;
+
+    res.json({ message: 'Email verified successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Resend verification email
+exports.resendVerificationEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email
+    });
+
+    if (error) throw error;
+
+    res.json({ message: 'Verification email sent successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
